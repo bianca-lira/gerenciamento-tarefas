@@ -1,0 +1,230 @@
+<div class="header">
+  <div class="header-content">
+    <div class="title-area">
+      <h1>Gerenciamento de Tarefas</h1>
+      <span>Acompanhe e organize suas atividades</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" (click)="novaTarefa = true">
+        + Nova Tarefa
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="table-container">
+    <div class="filters-container">
+        <div class="field responsavel">
+            <label for="responsavelFiltro">Responsável</label>
+            <input
+                pInputText
+                id="responsavelFiltro"
+                [(ngModel)]="filtro.responsavel"
+                placeholder="Digite o Responsável" />
+        </div>
+
+        <div class="field status">
+            <label for="statusFiltro">Status</label>
+
+            <p-dropdown
+                id="statusFiltro"
+                [options]="statusList"
+                [(ngModel)]="filtro.status"
+                optionLabel="label"
+                optionValue="label"
+                placeholder="Todos"
+                appendTo="body">
+            </p-dropdown>
+        </div>
+    </div>
+
+    <div class="actions">
+
+        <button
+            pButton
+            type="button"
+            label="Buscar"
+            icon="pi pi-search"
+            class="btn-primary"
+            (click)="carregarTarefas()">
+        </button>
+
+        <button
+            pButton
+            type="button"
+            label="Limpar"
+            icon="pi pi-times"
+            severity="secondary"
+            style=" background-color: #86BC24;"
+            (click)="limparFiltros()">
+        </button>
+
+    </div>
+
+    <p-table
+        [value]="tarefas"
+        [paginator]="true"
+        [rows]="5"
+        [totalRecords]="totalRecords"
+        [lazy]="true"
+        responsiveLayout="scroll"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="tarefas-table"
+        (onLazyLoad)="loadData($event)"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Data de criação</th>
+                <th>Data de Conclusão</th>
+                <th>Status</th>
+                <th>Reponsável</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+            <tr>
+                <td>
+                    <button
+                        pButton
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"
+                        pTooltip="Editar"
+                        tooltipPosition="top"
+                        (click)="editarTarefa(task)">
+                    </button>
+
+
+                    <button
+                        pButton
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger"
+                        pTooltip="Excluir"
+                        tooltipPosition="top"
+                        (click)="removerTarefa(task.id)">
+                    </button>
+                </td>
+                <td>{{ task.titulo }}</td> 
+                <td>{{ task.descricao }}</td> 
+                <td>{{ task.dataDeCriacao | date:'dd/MM/yyyy' }}</td>
+                <td>{{ task.dataDeConclusao | date:'dd/MM/yyyy'}}</td> 
+                <td>{{ task.status }}</td> 
+                <td>{{ task.responsavel }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-dialog
+    header="Nova Tarefa"
+    [(visible)]="novaTarefa"
+    [modal]="true"
+    [style]="{ width: '700px' }"
+    [draggable]="false"
+    [resizable]="false">
+
+    <div class="form-grid">
+            <div class="field">
+                <label for="titulo" class="required-label">Título</label>
+                <input
+                    pInputText
+                    id="titulo"
+                    name="titulo"
+                    required
+                    [(ngModel)]="tarefa.titulo"
+                    #titulo="ngModel" />
+            </div>
+            
+            <div class="field">
+                <label for="descricao" class="required-label">Descrição</label>
+                <input
+                    pInputText
+                    id="descricao"
+                    name="descricao"
+                    required
+                    [(ngModel)]="tarefa.descricao"
+                    #descricao="ngModel" />
+            </div>
+            <div class="field">
+                <label for="responsavel" class="required-label">Responsavel</label>
+                <input
+                    pInputText
+                    id="responsavel"
+                    name="responsavel"
+                    required
+                    [(ngModel)]="tarefa.responsavel"
+                    #responsavel="ngModel" />
+            </div>
+            <div class="field">
+                <label for="status" class="required-label">Status</label>
+                <p-dropdown 
+                    [options]="statusList" 
+                    [(ngModel)]="tarefa.status" 
+                    appendTo="body"
+                    styleClass="status-dropdown"
+                    optionLabel="label"
+                    optionValue="value"  />
+            </div>
+        <div class="actions">
+            <button
+                pButton
+                type="button"
+                label="Cancelar"
+                severity="secondary"
+                class="btn-cancelar"
+                (click)="novaTarefa = false">
+            </button>
+            <button
+                pButton
+                type="button"
+                label="Salvar"
+                icon="pi pi-check"
+                class="btn-salvar"
+                (click)="criarTarefa()">
+            </button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Sucesso" [(visible)]="isShowSuccess" [modal]="true" [closable]="false" [style]="{ width: '400px' }" > 
+    <div class="dialog-message success-message"> 
+        <i class="pi pi-check-circle"></i> 
+        <span> {{ mensagemSucesso }} </span> 
+    </div> <ng-template pTemplate="footer"> 
+        <button 
+        pButton 
+        label="OK"
+        icon="pi pi-check" 
+        (click)="isShowSuccess = false"> 
+        </button> 
+    </ng-template> 
+</p-dialog>
+
+<!-- DIALOG ERRO --> 
+ <p-dialog header="Erro" [(visible)]="isShowErro" [modal]="true" [closable]="false" [style]="{ width: '400px' }" > 
+    <div class="dialog-message error-message"> 
+        <i class="pi pi-times-circle"></i> 
+        <span> {{ mensagemErro }} </span> 
+    
+    </div> <ng-template pTemplate="footer"> 
+        <button 
+        pButton 
+        label="Fechar" 
+        icon="pi pi-times" 
+        severity="danger" 
+        (click)="isShowErro = false"> 
+        </button> 
+    
+    </ng-template> 
+</p-dialog> 
+<!-- LOADING --> 
+ <p-dialog [(visible)]="loading" [modal]="true" [closable]="false" [showHeader]="false" [style]="{ width: '200px' }" > 
+    <div class="loading-container"> 
+        <p-progressSpinner></p-progressSpinner> 
+        <span> Carregando... </span> 
+    </div> 
+</p-dialog>
