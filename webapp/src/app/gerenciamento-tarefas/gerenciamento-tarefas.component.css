@@ -1,0 +1,203 @@
+
+.header {
+  background: linear-gradient(135deg, #86BC24, #20c997);
+  color: black;
+  padding: 20px 40px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-area h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.title-area span {
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.btn-primary {
+  border: none;
+  background: white;
+  color: #86BC24;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #f1f1f1;
+}
+
+
+.table-container {
+  background: #ffffff;
+  margin: 25px;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.table-header h3 {
+  margin: 0;
+  color: #86BC24;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.table-header span {
+  background: #e8f5e9;
+  color: #86BC24;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+::ng-deep .tarefas-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+::ng-deep .tarefas-table .p-datatable-thead > tr > th {
+  background: #f8fafc;
+  color: #111827;
+  font-weight: 700;
+  text-align: center;
+  padding: 14px 12px;
+  border: 1px solid #e5e7eb;
+}
+
+::ng-deep .tarefas-table .p-datatable-tbody > tr > td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 14px 12px;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+}
+
+::ng-deep .tarefas-table .p-datatable-tbody > tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+::ng-deep .tarefas-table .p-datatable-tbody > tr:hover {
+  background: #ecfdf5;
+}
+
+::ng-deep .tarefas-table .p-datatable-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+::ng-deep .tarefas-table .p-paginator {
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  padding: 12px;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.filters-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.field.responsavel {
+    width: 300px;
+}
+
+.field.status {
+    width: 180px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.field label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.error {
+    color: #ef4444;
+    font-size: .875rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+}
+
+
+.required-label::after {
+    content: "*";
+    color: #ef4444;
+    font-weight: bold;
+}
+
+
+:host ::ng-deep .status-dropdown {
+    width: 100%;
+}
+
+:host ::ng-deep .status-dropdown .p-dropdown {
+    width: 100%;
+    min-height: 42px;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-item {
+    padding: .85rem 1rem;
+}
+
+:host ::ng-deep .p-dropdown:not(.p-disabled):hover {
+    border-color: #3b82f6;
+}
+
+
+.btn-salvar {
+    background: #16a34a !important;
+    border: 1px solid #16a34a !important;
+}
+
+.btn-salvar:hover {
+    background: #15803d !important;
+    border-color: #15803d !important;
+}
+
+.btn-cancelar {
+    background: #64748b !important;   
+}
